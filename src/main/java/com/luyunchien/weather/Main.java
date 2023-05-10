@@ -1,4 +1,4 @@
-package org.example;
+package com.luyunchien.weather;
 
 import com.google.gson.Gson;
 import lombok.ToString;
@@ -15,10 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
+        if (args.length != 1) {
+            throw new RuntimeException("Usage: weather.jar SEARCH_QUERY");
+        }
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            //getWeather("a", 5, httpClient);
-            List<WeatherInfo> data = getAllWeather("a", httpClient);
+            List<WeatherInfo> data = getAllWeather(args[0], httpClient);
             System.out.println(data.size());
             for(WeatherInfo info : data){
                 System.out.println(info.name);
